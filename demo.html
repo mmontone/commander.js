@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Commander.js Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="logo.ico"  />
+    <link href="commander.js.css" type="text/css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.23.custom.css" rel="stylesheet" />	
+    <script type="text/javascript" src="jquery-ui-1.8.23.custom/js/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="jquery-ui-1.8.23.custom/js/jquery-ui-1.8.23.custom.min.js"></script>
+    <script language="javascript" type="text/javascript" src="commander.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div id="commander-menu">
+      </div>
+      <div class="title">
+        Commander.js demo
+      </div>
+      <div class="content">
+        This is a Commander.js demo. Type 'help' on the command line to get started, or 'doc' to read the documentation.
+      </div>
+      <div class="push">
+      </div>
+    </div>
+    <div id="footer" class="footer">
+      <div id="command-line">
+        <input id="command-line-input"></input>
+        <input id="command-line-accept" type="button" value="Run" onclick="javascript:executeCommand($('#command-line-input').val());"></input>
+        <input id="command-line-cancel" type="button" value="Cancel" onclick="javascript:$('#command-line-input').val('');"></input>
+      </div>
+      <div id="commander-help">
+      </div>
+      <div id="commander-debug">
+        Active command tables: 
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    $(function()
+    {
+    var textBox = $('#command-line-input');
+    var code =null;
+    textBox.keypress(function(e)
+    {
+    code = (e.keyCode ? e.keyCode : e.which);
+    switch (code) {
+    case 13: executeCommand(textBox.val());
+    break;
+    case 27: textBox.val("");
+    break;
+    }
+
+    });
+    textBox.focus(function() {
+    textBox.val('');
+    });
+    });
+</script>
+</html>
