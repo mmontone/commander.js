@@ -52,3 +52,17 @@ html, body {
     float:left;
 }
 
+#commander-help h1 {
+    font-size:14px;
+}
+
+#commander-help ul {
+    list-style-type: none;
+}
+
+#commander-help {
+    font-size:12px;
+}
+
+
+

@@ -59,6 +59,22 @@ CommandTable.prototype.findCommandNamed = function (name) {
 
 CommandTable.prototype.enable = function () {
         ActiveCommandTables[this.name] = this;
+
+        // Register key bindings
+        this.commands.forEach(function (command) {
+                                      if(command.keystroke) {
+                                              $(document).bind('keydown', command.keystroke, 
+                                                               function(event) {
+                                                                       command.execute();
+                                                                       event.preventDefault();
+                                                               });
+                                              $("#command-line-input").bind('keydown', command.keystroke, 
+                                                                            function(event) {
+                                                                                    command.execute();
+                                                                                    event.preventDefault();
+                                                                            });
+                                      }
+                              });
 };
 
 CommandTable.prototype.disable = function () {
@@ -111,7 +127,12 @@ function generateCommandsHelp() {
                 if(commands) {
                         help += "<ul>";
                         for each(var command in commands) {
-                                help += "<li>" + command.commandLineName + " - " + command.description + "</li>";
+                                help += "<li>" + command.commandLineName + " - " + command.description;
+                                if(command.keystroke) {
+                                        help += " (" + command.keystroke + ")";
+                                }
+
+                                help += "</li>";
                         }
                         help += "</ul>";
                 }
@@ -130,7 +151,11 @@ function generateCommandsMenu() {
                                 if (command.menu) {
                                         menu += "<li><a id=\"" + command.name + 
                                                 "\" href=\"#\" onclick=\"javascript:findCommandNamed('" + 
-                                                command.name + "').execute();\">" + command.title +  "</a></li>";
+                                                command.name + "').execute();\">" + command.title;
+                                        if(command.keystroke) {
+                                                menu += " (" + command.keystroke + ")";
+                                        }
+                                        menu +=  "</a></li>";
                                 }
                         }
                         menu += "</ul>";
@@ -152,6 +177,7 @@ new CommandTable({name: "global-command-table",
                               commandLineName:"help",
                               description:"Obtain help",
                               menu: true,
+                              keystroke:'ctrl+h',
                               execute: function() {
                                       $('#commander-help').html(generateCommandsHelp());
                                       $("#commander-help").show();
@@ -161,6 +187,7 @@ new CommandTable({name: "global-command-table",
                               description: "Display system menu",
                               title: 'Menu',
                               menu: true,
+                              keystroke:'ctrl+m',
                               execute: function () {
                                       $('#commander-menu').html(generateCommandsMenu());
                                       $("#commander-menu").show();
@@ -173,6 +200,7 @@ new CommandTable({name: "global-command-table",
                               title: 'Documentation',
                               description: "Read documentation",
                               menu: true,
+                              keystroke: 'ctrl+d',
                               execute: function() {
                                       window.open("doc.html", "_blank");
                               }},
@@ -191,5 +219,53 @@ new CommandTable({name: "global-command-table",
                               menu: false,
                               execute: function () {
                                       $("#commander-debug").show();
-                              }}
+                              }}                             
                             ]});
+
+// new CommandTable({name: "command-line-command-table",
+//                   title: "Command Line commands",
+//                   parents: [],
+//                   description: "Command Line commands table",
+//                   commands: [{name:"command-line-focus-command",
+//                               title: 'Command Line focus',
+//                               commandLineName:"command-line-focus",
+//                               description:"Command Line focus",
+//                               menu: false,
+//                               keystroke:'alt+x',
+//                               execute: function() {
+//                                       $('#command-line-input').focus();
+//                               }},
+//                              {name:"command-line-cancel-command",
+//                               title: 'Command Line camcel',
+//                               commandLineName:"command-line-cancel",
+//                               description:"Command Line cancel",
+//                               menu: false,
+//                               keystroke: 27,
+//                               execute: function() {
+//                                       $('#command-line-input').val('');
+//                               }}]});   
+
+$(function()  {
+          var textBox = $('#command-line-input');
+          var code =null;
+          textBox.keypress(function(e)
+                           {
+                                   code = (e.keyCode ? e.keyCode : e.which);
+                                   switch (code) {
+                                   case 13: executeCommand(textBox.val());
+                                           textBox.val('');
+                                           break;
+                                   }
+
+                           });
+          textBox.keyup(function(e){
+                                if (e.keyCode == 27) {textBox.val(""); } 
+                        });
+          textBox.focus(function() {
+                                textBox.val('');
+                        });
+          $(document).bind('keydown', 'alt+x', function () {
+                                   textBox.focus();
+                           });
+
+  });
