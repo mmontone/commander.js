@@ -27,8 +27,8 @@
     <div id="footer" class="footer">
       <div id="command-line">
         <input id="command-line-input"></input>
-        <input id="command-line-accept" type="button" value="Run" onclick="javascript:executeCommand($('#command-line-input').val());$('#command-line-input').focus();"></input>
-        <input id="command-line-cancel" type="button" value="Cancel" onclick="javascript:$('#command-line-input').val('');$('#command-line-input').focus();"></input>
+        <input id="command-line-accept" type="button" value="Run" onclick="javascript:executeCommand($('#command-line-input').val());$('#command-line').hide('slide', { direction: 'down' }, 500);"></input>
+        <input id="command-line-cancel" type="button" value="Cancel" onclick="javascript:$('#command-line-input').val('');$('#command-line').hide('slide', { direction: 'down' }, 500);"></input>
       </div>
       <div id="commander-help">
       </div>

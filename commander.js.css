@@ -20,6 +20,7 @@ html, body {
 #command-line {
     padding:2em;
     width:30%;
+    display:none;
 }
 
 #command-line input {

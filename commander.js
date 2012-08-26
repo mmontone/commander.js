@@ -219,6 +219,15 @@ new CommandTable({name: "global-command-table",
                               menu: false,
                               execute: function () {
                                       $("#commander-debug").show();
+                              }},
+                             {name:"quit-command",
+                              commandLineName: 'quit',
+                              description: "Quit",
+                              title: 'Quit',
+                              keystroke: 'ctrl+q',
+                              menu: true,
+                              execute: function () {
+                                      window.close();
                               }}                             
                             ]});
 
@@ -254,17 +263,22 @@ $(function()  {
                                    switch (code) {
                                    case 13: executeCommand(textBox.val());
                                            textBox.val('');
+                                           $("#command-line").hide("slide", { direction: "down" }, 500);
                                            break;
                                    }
 
                            });
           textBox.keyup(function(e){
-                                if (e.keyCode == 27) {textBox.val(""); } 
+                                if (e.keyCode == 27) {
+                                        textBox.val(""); 
+                                        $("#command-line").hide("slide", { direction: "down" }, 500);
+                                } 
                         });
           textBox.focus(function() {
                                 textBox.val('');
                         });
           $(document).bind('keydown', 'alt+x', function () {
+                                   $("#command-line").show("slide", { direction: "down" }, 500);
                                    textBox.focus();
                            });
 
