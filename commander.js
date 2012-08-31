@@ -166,12 +166,12 @@ function generateCommandsMenu() {
         return menu;
 }
 
-// The global command table
+// The system command table
 
-new CommandTable({name: "global-command-table",
-                  title: "Global commands",
+new CommandTable({name: "system-command-table",
+                  title: "System",
                   parents: [],
-                  description: "The global command table",
+                  description: "The system command table",
                   commands: [{name:"doc-command",
                               commandLineName: 'doc',
                               title: 'Documentation',
@@ -209,7 +209,7 @@ new CommandTable({name: "global-command-table",
                             ]});
 
 new CommandTable({name: "help-command-table",
-                  title: "Help commands",
+                  title: "Help",
                   description: "Help commands",
                   parents:[],
                   commands:[{name:"help-command",
@@ -242,7 +242,7 @@ new CommandTable({name: "help-command-table",
                              }}]});
 
 new CommandTable({name: "menu-command-table",
-                  title:"Menu commands",
+                  title:"Menu",
                   parents: [],
                   commands:[{name:"menu-command",
                              commandLineName: 'menu',
