@@ -275,19 +275,23 @@ new CommandTable({name: "menu-command-table",
 //                               title: 'Command Line focus',
 //                               commandLineName:"command-line-focus",
 //                               description:"Command Line focus",
-//                               menu: false,
+//                               menu: true,
 //                               keystroke:'alt+x',
-//                               execute: function() {
+//                               execute: function(e) {
+//                                       $("#command-line").show("slide", { direction: "down" }, 500);
 //                                       $('#command-line-input').focus();
+//                                       e.preventDefault();
 //                               }},
 //                              {name:"command-line-cancel-command",
 //                               title: 'Command Line camcel',
 //                               commandLineName:"command-line-cancel",
 //                               description:"Command Line cancel",
-//                               menu: false,
+//                               menu: true,
 //                               keystroke: 27,
-//                               execute: function() {
+//                               execute: function(e) {
 //                                       $('#command-line-input').val('');
+//                                       $("#command-line").hide("slide", { direction: "down" }, 500);
+//                                       e.preventDefault();
 //                               }}]});   
 
 $(function()  {
