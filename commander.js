@@ -172,30 +172,7 @@ new CommandTable({name: "global-command-table",
                   title: "Global commands",
                   parents: [],
                   description: "The global command table",
-                  commands: [{name:"help-command",
-                              title: 'Help',
-                              commandLineName:"help",
-                              description:"Obtain help",
-                              menu: true,
-                              keystroke:'ctrl+h',
-                              execute: function() {
-                                      $('#commander-help').html(generateCommandsHelp());
-                                      $("#commander-help").show();
-                              }},
-                             {name:"menu-command",
-                              commandLineName: 'menu',
-                              description: "Display system menu",
-                              title: 'Menu',
-                              menu: true,
-                              keystroke:'ctrl+m',
-                              execute: function () {
-                                      $('#commander-menu').html(generateCommandsMenu());
-                                      $("#commander-menu").show();
-                                      // $('#commander-menu > ul').menuBar({
-                                      //                                   menuExpand:true,
-                                      //                                   menuIcon: true});
-                              }},
-                             {name:"doc-command",
+                  commands: [{name:"doc-command",
                               commandLineName: 'doc',
                               title: 'Documentation',
                               description: "Read documentation",
@@ -230,6 +207,65 @@ new CommandTable({name: "global-command-table",
                                       window.close();
                               }}                             
                             ]});
+
+new CommandTable({name: "help-command-table",
+                  title: "Help commands",
+                  description: "Help commands",
+                  parents:[],
+                  commands:[{name:"help-command",
+                             title: 'Help',
+                             commandLineName:"help",
+                             description:"Obtain help",
+                             menu: true,
+                             keystroke:'ctrl+h',
+                             execute: function() {
+                                     $('#commander-help').html(generateCommandsHelp());
+                                     $("#commander-help").show("slide", {direction:"down"}, 500);
+                             }},
+                            {name:"help-quit-command",
+                             title: 'Quit help',
+                             commandLineName:"help-quit",
+                             description:"Quit help",
+                             menu: true,
+                             execute: function() {
+                                     $("#commander-help").hide("slide", {direction:"down"}, 500);
+                             }},
+                            {name:'apropos-command',
+                             title:"Apropos command",
+                             commandLineName:'apropos-command',
+                             description: "Apropos command",
+                             menu:true,
+                             keystroke:'ctrl+a',
+                             execute: function () {
+                                     var term = prompt('Apropos command: ');
+                                     alert('Nothing found');
+                             }}]});
+
+new CommandTable({name: "menu-command-table",
+                  title:"Menu commands",
+                  parents: [],
+                  commands:[{name:"menu-command",
+                             commandLineName: 'menu',
+                             description: "Display system menu",
+                             title: 'Menu',
+                             menu: true,
+                             keystroke:'ctrl+m',
+                             execute: function () {
+                                     $('#commander-menu').html(generateCommandsMenu());
+                                     $("#commander-menu").show("slide", {direction:"up"}, 500);
+                                     // $('#commander-menu > ul').menuBar({
+                                     //                                   menuExpand:true,
+                                     //                                   menuIcon: true});
+                             }},
+                            {name:"menu-quit-command",
+                             commandLineName: 'menu-quit',
+                             description: "Quit system menu",
+                             title: 'Quit menu',
+                             menu: true,
+                             execute: function () {
+                                     $("#commander-menu").hide("slide", {direction:"up"}, 500);
+                             }}
+                           ]});
 
 // new CommandTable({name: "command-line-command-table",
 //                   title: "Command Line commands",
@@ -274,6 +310,10 @@ $(function()  {
                                         $("#command-line").hide("slide", { direction: "down" }, 500);
                                 } 
                         });
+          textBox.bind('keydown', 'ctrl+g', function (e) {
+                               $("#command-line").hide("slide", { direction: "down" }, 500);
+                               e.preventDefault();
+                       });
           textBox.focus(function() {
                                 textBox.val('');
                         });

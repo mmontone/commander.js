@@ -6,16 +6,42 @@ html, body {
     height: 100%;
 }
 
-.wrapper {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 auto -4em;
+div#commander-menu{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
 }
 
-.footer, .push {
-    height: 4em;
+div#footer, div.footer{
+    position:absolute;
+    bottom:0;
+    /* left:0; */
+    width:100%;
 }
+
+/* @media screen{ */
+/*     body>div#commander-menu { */
+/*         position:fixed; */
+/*     } */
+    
+/*     body>div#footer{ */
+/*         position:fixed; */
+/*     } */
+/*     div.footer { */
+/*         position:fixed !important; */
+/*     } */
+/* } */
+
+* html body{
+    overflow:hidden;
+} 
+
+* html div#content{
+    height:100%;
+    overflow:auto;
+}
+
 
 #command-line {
     padding:2em;
@@ -32,9 +58,13 @@ html, body {
 }
 
 #commander-help {
-    height:10em;
+    /* height:10em; */
     display:none;
     width:30%;
+    position:fixed;
+    bottom:0;
+    right:0;
+    background-color: #FFFFF2;
 }
 
 #commander-menu {
@@ -65,5 +95,6 @@ html, body {
     font-size:12px;
 }
 
-
-
+#commander-menu {
+    background-color:#FFFFF2;
+}
