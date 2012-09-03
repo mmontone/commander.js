@@ -22,6 +22,7 @@ function findCommandTable(name) {
 
 function CommandTable (args) {
         this.name = args.name;
+        this.shortName = args.shortName;
         this.title = args.title;
         this.description = args.description;
         this.parents = args.parents.map(findCommandTable);
@@ -166,9 +167,21 @@ function generateCommandsMenu() {
         return menu;
 }
 
+function generateStatus() {
+        var status = "(";
+        for each(var commandTable in ActiveCommandTables) {
+                status += commandTable.shortName;
+                status += ",";
+        }
+
+        status += ")";
+        return status;
+}
+
 // The system command table
 
 new CommandTable({name: "system-command-table",
+                  shortName: "SYS",
                   title: "System",
                   parents: [],
                   description: "The system command table",
@@ -209,6 +222,7 @@ new CommandTable({name: "system-command-table",
                             ]});
 
 new CommandTable({name: "help-command-table",
+                  shortName:"HLP",
                   title: "Help",
                   description: "Help commands",
                   parents:[],
@@ -242,6 +256,7 @@ new CommandTable({name: "help-command-table",
                              }}]});
 
 new CommandTable({name: "menu-command-table",
+                  shortName: "MNU",
                   title:"Menu",
                   parents: [],
                   commands:[{name:"menu-command",
@@ -253,9 +268,6 @@ new CommandTable({name: "menu-command-table",
                              execute: function () {
                                      $('#commander-menu').html(generateCommandsMenu());
                                      $("#commander-menu").show("slide", {direction:"up"}, 500);
-                                     // $('#commander-menu > ul').menuBar({
-                                     //                                   menuExpand:true,
-                                     //                                   menuIcon: true});
                              }},
                             {name:"menu-quit-command",
                              commandLineName: 'menu-quit',
@@ -266,6 +278,31 @@ new CommandTable({name: "menu-command-table",
                                      $("#commander-menu").hide("slide", {direction:"up"}, 500);
                              }}
                            ]});
+
+new CommandTable({name: "status-command-table",
+                  shortName: "ST",
+                  title:"Status",
+                  parents: [],
+                  commands:[{name:"status-command",
+                             commandLineName: 'status',
+                             description: "Display system status",
+                             title: 'Status',
+                             menu: true,
+                             keystroke:'alt+s',
+                             execute: function () {
+                                     $('#commander-status').html(generateStatus());
+                                     $("#commander-status").show("slide", {direction:"up"}, 500);
+                             }},
+                            {name:"status-quit-command",
+                             commandLineName: 'status-quit',
+                             description: "Quit system status",
+                             title: 'Quit status',
+                             menu: true,
+                             execute: function () {
+                                     $("#commander-status").hide("slide", {direction:"up"}, 500);
+                             }}
+                           ]});
+
 
 // new CommandTable({name: "command-line-command-table",
 //                   title: "Command Line commands",

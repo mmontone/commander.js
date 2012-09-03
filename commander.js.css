@@ -47,6 +47,7 @@ div#footer, div.footer{
     padding:2em;
     width:500px;
     display:none;
+    border:1px solid;
 }
 
 #command-line input {
@@ -58,13 +59,21 @@ div#footer, div.footer{
 }
 
 #commander-help {
-    /* height:10em; */
     display:none;
-    width:30%;
     position:fixed;
     bottom:0;
     right:0;
     background-color: #FFFFF2;
+    border:1px solid;
+    padding:10px;
+}
+
+#commander-status {
+    position:fixed;
+    top: 0;
+    right: 0;
+    background-color: #FFFFF2;
+    height: 20px;
 }
 
 #commander-menu {
