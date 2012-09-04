@@ -348,7 +348,7 @@ $(function()  {
                            {
                                    code = (e.keyCode ? e.keyCode : e.which);
                                    switch (code) {
-                                   case 13: executeCommand(textBox.val());
+                                   case 13: Commander.executeCommand(textBox.val());
                                            textBox.val('');
                                            $("#command-line").hide("slide", { direction: "down" }, 500);
                                            break;
