@@ -4,6 +4,10 @@ var Commander =
                  var CommandTables = [];
                  var ActiveCommandTables = [];
 
+                 function commandCompletionList() {
+                         
+                 }
+
                  function registerCommandTable(commandTable) {
                          if(CommandTables[commandTable.name]) {
                                  console.log('Warning: Redifining ' + commandTable.title + ' command table');
@@ -181,6 +185,21 @@ var Commander =
                          return status;
                  }
 
+                 function commandsCompletionData() {
+                         var commandsCompletion = [];
+                         for each(var commandTable in ActiveCommandTables) {
+                                 var commands = commandTable.commands;
+                                 for each(var command in commands) {
+                                         commandsCompletion.push({label: command.commandLineName,
+                                                                  description: command.description,
+                                                                  keystroke: command.keystroke,
+                                                                  table: commandTable,
+                                                                  category: commandTable.title});
+                                 }
+                         }
+                         return commandsCompletion;
+                 }
+
                  // The system command table
 
                  new CommandTable({name: "system-command-table",
@@ -336,7 +355,8 @@ var Commander =
 
                  return {
                          findCommandNamed: findCommandNamed,
-                         executeCommand: executeCommand
+                         executeCommand: executeCommand,
+                         commandsCompletionData: commandsCompletionData
                  };
                  
          }());
@@ -373,4 +393,27 @@ $(function()  {
                                    textBox.focus();
                            });
 
+          // Command completion
+          $.widget("custom.catcomplete", $.ui.autocomplete, {
+		           _renderMenu: function( ul, items ) {
+			           var self = this,
+				   currentCategory = "";
+			           $.each( items, function( index, item ) {
+				                   if ( item.category != currentCategory ) {
+					                   ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+					                   currentCategory = item.category;
+				                   }
+				                   self._renderItem( ul, item );
+			                   });
+		           }
+	           });
+
+          var data = Commander.commandsCompletionData();
+
+          $( "#command-line-input" ).catcomplete({
+			                                 delay: 0,
+			                                 source: data,
+                                                         position: { my : "left bottom", at: "left top" }
+		                                 });
+       
   });

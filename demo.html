@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="shortcut icon" href="logo.ico"  />
     <link href="commander.js.css" type="text/css" rel="stylesheet" media="screen" />
-    <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
+    <link type="text/css" href="jquery-ui-1.8.23.custom/css/ui-lightness/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
     <link type="text/css" href="mainmenu.css" rel="stylesheet" />	
     <script type="text/javascript" src="jquery-ui-1.8.23.custom/js/jquery-1.8.0.min.js"></script>
     <script type="text/javascript" src="jquery.hotkeys/jquery.hotkeys.js"></script>
@@ -18,7 +18,7 @@
     <div id="footer" class="footer">
       <div id="command-line">
         <input id="command-line-input"></input>
-        <input id="command-line-accept" type="button" value="Run" onclick="javascript:executeCommand($('#command-line-input').val());$('#command-line').hide('slide', { direction: 'down' }, 500);"></input>
+        <input id="command-line-accept" type="button" value="Run" onclick="javascript:Commander.executeCommand($('#command-line-input').val());$('#command-line').hide('slide', { direction: 'down' }, 500);"></input>
         <input id="command-line-cancel" type="button" value="Cancel" onclick="javascript:$('#command-line-input').val('');$('#command-line').hide('slide', { direction: 'down' }, 500);"></input>
       </div>
     </div>
