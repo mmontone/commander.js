@@ -21,7 +21,7 @@ window.onload = function (){
                          getScriptSync("jquery-ui-1.8.23.custom/js/jquery-1.8.0.min.js");
 
                          getStyleSheet("commander.js.css");
-                         getStyleSheet("css/ui-lightness/jquery-ui-1.8.23.custom.css");
+                         getStyleSheet("jquery-ui-1.8.23.custom/css/ui-lightness/jquery-ui-1.8.23.custom.css");
                          getStyleSheet("mainmenu.css");
                          
                          getScriptSync("jquery-ui-1.8.23.custom/js/jquery-ui-1.8.23.custom.min.js");
