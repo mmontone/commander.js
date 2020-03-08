@@ -66,6 +66,28 @@ var Commander =
             return null;
         };
 
+        CommandTable.prototype.findCommandTitled = function (title) {
+            for (var command of this.commands) {
+                if(command.title == title) {
+                    return command;
+                }
+            }
+
+            return null;
+        };
+
+        CommandTable.prototype.findCommandForSpeech = function (term) {
+            for (var command of this.commands) {
+                if(command.name.toUpperCase() == term.toUpperCase() ||
+                   command.title.toUpperCase() == term.toUpperCase() ||
+                   compareTwoStrings(command.title.toUpperCase(), term.toUpperCase()) >= 0.8) {
+                    return command;
+                }
+            }
+
+            return null;
+        };
+
         CommandTable.prototype.enable = function () {
             ActiveCommandTables.set(this.name, this);
 
@@ -111,6 +133,15 @@ var Commander =
             return null;
         }
 
+        function activeCommands () {
+            var activeCommands = [];
+            for (var commandTable of ActiveCommandTables.values()) {
+                activeCommands = activeCommands.concat(commandTable.commands);
+            }
+
+            return activeCommands;                
+        }
+
         function findCommandNamed(name) {
             for (var commandTable of ActiveCommandTables.values()) {
                 var command = commandTable.findCommandNamed(name);
@@ -121,6 +152,25 @@ var Commander =
             return null;
         }
 
+        function findCommandTitled(title) {
+            for (var commandTable of ActiveCommandTables.values()) {
+                var command = commandTable.findCommandTitled(title);
+                if (command) {
+                    return command;
+                }
+            }
+            return null;
+        }
+
+        function findCommandForSpeech(term) {
+            for (var commandTable of ActiveCommandTables.values()) {
+                var command = commandTable.findCommandForSpeech(term);
+                if (command) {
+                    return command;
+                }
+            }
+            return null;
+        }
 
         function executeCommand(commandName) {
             var command = findCommandFromCommandLineName(commandName);
@@ -357,10 +407,13 @@ var Commander =
 
         return {
             findCommandNamed: findCommandNamed,
+            findCommandTitled: findCommandTitled,
+            findCommandForSpeech: findCommandForSpeech,
             executeCommand: executeCommand,
             commandsCompletionData: commandsCompletionData,
             commandTables : CommandTables,
-            activeCommandTables : ActiveCommandTables
+            activeCommandTables : ActiveCommandTables,
+            activeCommands : activeCommands
         };
 
     }());
