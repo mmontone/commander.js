@@ -37,10 +37,19 @@ var Commander =
             this.commands = args.commands.map(function (command) {
                 return new Command(command);
             });
+            // CommandTables are enabled by default
             this.enabled = args.enabled == false ? false : true;
 
             registerCommandTable(this);
         }
+
+        CommandTable.prototype.addCommand = function (cmd) {
+            this.commands.push(cmd);
+        };
+
+        CommandTable.prototype.clear = function () {
+            this.commands = [];
+        };
 
         CommandTable.prototype.findCommand = function (commandLineName) {
             console.log(commandLineName);
@@ -252,6 +261,56 @@ var Commander =
             return commandsCompletion;
         }
 
+        function extractCommandsFromCurrentPage (clearPageCommandTable=true, extractLinks=true) {
+
+            console.log('Extracting commands from current page');
+            var pageCommandTable = CommandTables.get('page-command-table');
+            
+            if (clearPageCommandTable) {
+                pageCommandTable.clear();
+            }
+
+            $('command').each((i, el) => {
+                console.log(el);
+                var $el = $(el);
+                var cmd = new Command({
+                    name: $el.attr('name'),
+                    commandLineName: $el.attr('command-line') || $el.attr('name'),
+                    title: $el.attr('title'),
+                    description: $el.attr('description') || $el.attr('title'),
+                    menu: $el.attr('menu'),
+                    keystroke: $el.attr('keystroke'),
+                    execute: window[$el.attr('execute')]
+                });
+
+                console.log('Command extracted: ', cmd);
+
+                pageCommandTable.addCommand(cmd);
+            });
+
+            if (extractLinks) {
+                $('a').each((i, el) => {
+                    var $el = $(el);
+                    if ($el.data('command') !== undefined) {
+                        var cmd = new Command({
+                            name: $el.data('command'),
+                            commandLineName: $el.data('command-line') || $el.data('command'),
+                            title: $el.attr('title'),
+                            description: $el.data('description') || $el.attr('title') || ('Navigate to ' + $el.attr('href')),
+                            keystroke: $el.data('keystroke'),
+                            execute: $el.attr('onclick') || function () {
+                                window.location = $el.attr('href');
+                            }                            
+                        });
+
+                        console.log('Command extracted: ', cmd);
+
+                        pageCommandTable.addCommand(cmd);
+                    }
+                });
+            }            
+        }
+
         // The system command table
 
         new CommandTable({name: "system-command-table",
@@ -377,6 +436,12 @@ var Commander =
                                      }}
                                    ]});
 
+        // Extracted commands from page are added to the page command table
+        new CommandTable({name: 'page-command-table',
+                          shortName: 'PG',
+                          title: 'Page',
+                          parents: [],
+                          commands: []});
 
         // new CommandTable({name: "command-line-command-table",
         //                   title: "Command Line commands",
@@ -413,7 +478,8 @@ var Commander =
             commandsCompletionData: commandsCompletionData,
             commandTables : CommandTables,
             activeCommandTables : ActiveCommandTables,
-            activeCommands : activeCommands
+            activeCommands : activeCommands,
+            extractCommandsFromCurrentPage : extractCommandsFromCurrentPage
         };
 
     }());

@@ -1,18 +1,17 @@
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <title>Commander.js Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="shortcut icon" href="logo.ico"  />
     <link href="commander.js.css" type="text/css" rel="stylesheet" media="screen" />
     <link type="text/css" href="jquery-ui-1.8.23.custom/css/ui-lightness/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
-    <link type="text/css" href="mainmenu.css" rel="stylesheet" />	
+    <link type="text/css" href="mainmenu.css" rel="stylesheet" />
     <script type="text/javascript" src="jquery-ui-1.8.23.custom/js/jquery-1.8.0.min.js"></script>
     <script type="text/javascript" src="jquery.hotkeys/jquery.hotkeys.js"></script>
     <script type="text/javascript" src="jquery-ui-1.8.23.custom/js/jquery-ui-1.8.23.custom.min.js"></script>
     <script language="javascript" type="text/javascript" src="commander.js"></script>
-    <script language="javascript" type="text/javascript" src="webspeech.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/string-similarity@4.0.1/src/index.min.js"></script>
+    <script language="javascript" type="text/javascript" src="extract.js"></script>
   </head>
   <body>
     <div id="commander-menu" class="menu">
@@ -29,17 +28,24 @@
     <div id="commander-debug" class="footer">
     </div>
     <div id="commander-status" class="footer">
-    </div>  
+    </div>
     <div id="content">
       <div class="title">
         Commander.js demo
       </div>
       <p>
-        This is a Commander.js demo. Hit Alt + x to open the command bar. Type 'help' on the command line to get started, or 'doc' to read the documentation.
+        This is a Commander.js demo. Hit Alt + X to open the command bar. Type 'help' on the command line to get started, or 'doc' to read the documentation.
       </p>
-
-      <p>
-        This example shows WebSpeech API support. Just say the commands into the microphone, like 'help', 'documentation', 'menu', etc.
-      </p>
+      <p>Some of the commands were extracted from this page html</p>
+      <a id="home" href="/home" data-command="home" title="Go home">Go home</a>
+      <a id="logout" href="#" onclick="logout();" data-command="logout" title="Logout">Logout</a>
+      <command name="show-message" title="Show message"
+               execute="showMessage" />
+    </div>
+    <script type="text/javascript">
+     function showMessage () {
+         alert('Hello world');
+     }
+    </script>
   </body>
 </html>
