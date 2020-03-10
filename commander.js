@@ -471,6 +471,8 @@ var Commander =
         //                               }}]});
 
         return {
+            CommandTable : CommandTable,
+            Command : Command,
             findCommandNamed: findCommandNamed,
             findCommandTitled: findCommandTitled,
             findCommandForSpeech: findCommandForSpeech,

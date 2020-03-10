@@ -52,3 +52,26 @@ recognition.onnomatch = function(event) {
 recognition.onerror = function(event) {
     console.error('Error occurred in recognition: ', event.error);
 };
+
+new Commander.CommandTable(
+    {name: "webspeech-command-table",
+     shortName: "WS",
+     title:"WebSpeech",
+     parents: [],
+     commands:[{name:"enable-speech",
+                commandLineName: 'enable-speech',
+                description: "Enable Web Speech",
+                title: 'Enable Speech',
+                menu: true,
+                execute: function () {
+                    recognition.start();
+                }},
+               {name:"disable-speech",
+                commandLineName: 'disable-speech',
+                description: "Disable Web Speech",
+                title: 'Disable Speech',
+                menu: true,
+                execute: function () {
+                    recognition.stop();
+                }}
+              ]});
